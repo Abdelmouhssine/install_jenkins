@@ -1,0 +1,4 @@
+---
+# defaults file for install_jenkins
+java: java-1.8.0-openjdk-devel
+port: 8080

@@ -1,0 +1,10 @@
+---
+# handlers file for install_jenkins
+- name: start jenkins
+  service:
+    name: jenkins
+    state: started
+- name: restart firewalld
+  service:
+    name: firewalld
+    state: restarted

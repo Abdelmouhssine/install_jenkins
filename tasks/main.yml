@@ -1,0 +1,35 @@
+---
+    - name: "Install  Java  OpenJDK 8 package"
+      yum:
+        name: "{{ java }}"
+        state: latest
+      tags:
+        - java
+    - name: "Ensure Jenkins Repository is Installed"
+      yum_repository:
+        name: jenkins
+        state: present
+        description: Official Jenkins Yum Repo
+        baseurl: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+        gpgcheck: yes
+        enabled: yes
+      tags:
+        - Repository
+        - jenkins-repo
+    - name: "Ensure Jenkins Is Installed"
+      yum:
+        name: jenkins
+        state: present
+        update_cache: yes
+      notify: start jenkins 
+      tags:
+        - installation
+    - name: "Open Firewall port"
+      firewalld:
+        port: "{{port}}/tcp"
+        permanent: yes
+        state: enabled
+      notify: restart firewalld
+      tags:
+        - firewall
